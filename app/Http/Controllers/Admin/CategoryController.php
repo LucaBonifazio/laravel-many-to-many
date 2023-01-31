@@ -11,12 +11,8 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 class CategoryController extends Controller
 {
     private $validation = [
-        'slug'      => [
-            'string',
-            'required',
-            'max:100',
-        ],
         'name'         => 'string|required|max:100',
+        'slug'         => 'string|required|max:100',
         'description'  => 'string|nullable',
     ];
 
@@ -58,8 +54,8 @@ class CategoryController extends Controller
         $data = $request->all();
 
         $category = new Category;
-        $category->slug             = $data['slug'];
         $category->name             = $data['name'];
+        $category->slug             = $data['slug'];
         $category->description      = $data['description'];
         $category->save();
 
@@ -106,8 +102,8 @@ class CategoryController extends Controller
 
         $data = $request->all();
 
-        $category->slug             = $data['slug'];
         $category->name             = $data['name'];
+        $category->slug             = $data['slug'];
         $category->description      = $data['description'];
         $category->update();
 

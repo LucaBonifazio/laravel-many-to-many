@@ -13,13 +13,13 @@ class TagSeeder extends Seeder
     public function run()
     {
         $tags = [
-            'php', 'Laravel', 'VueJs', 'Cucina Moderna', 'Piatti tipici', 'Acqua minerale', 'Roma', 'Torino', 'Valle d\'Aosta',
+            'php', 'Laravel 7', 'VueJs', 'Cucina moderna', 'Piatti tipici', 'Roma', 'Venezia', 'Emilia Romagna', 'Acqua minerale', 'Valle d\'Aosta',
         ];
 
         foreach ($tags as $tag) {
             Tag::create([
-                'slug' => Tag::getSlug($tag),
-                'name' => $tag,
+                'slug'  => Tag::getSlug($tag),
+                'name'  => $tag,
             ]);
         }
     }

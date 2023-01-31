@@ -24,7 +24,7 @@ class PostSeeder extends Seeder
             $title = $faker->words(rand(3, 7), true);
             $post = Post::create([
                 'category_id' => $faker->randomElement($categories)->id,
-                'slug'     => Str::slug($title),
+                'slug'     => Post::getSlug($title),
                 'title'    => $title,
                 'image'    => 'https://picsum.photos/id/'. rand(0, 1000) .'/500/400',
                 'content'  => $faker->paragraph(rand(1, 10), true),

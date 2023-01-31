@@ -12,11 +12,8 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 class PostController extends Controller
 {
     private $validation = [
-        'slug'      => [
-            'string',
-            'required',
-            'max:100',
-        ],
+        'category_id'  => 'required|integer|exists:categories,id',
+        'slug'         => 'string|required|max:100',
         'title'        => 'string|required|max:100',
         'image'        => 'url|max:100',
         'upload_image' => 'image|max:1024',
