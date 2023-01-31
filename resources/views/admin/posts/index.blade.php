@@ -25,7 +25,7 @@
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->category->name ?? '' }}</td>
                     <td>
-                        @foreach ($post->$tags as $tag)
+                        @foreach ($post->tags as $tag)
                             {{ $tag->name }}{{ $loop->last ? '' : ', '}}
                         @endforeach
                     </td>
