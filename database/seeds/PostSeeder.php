@@ -3,7 +3,6 @@
 use App\Tag;
 use App\Post;
 use App\Category;
-use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use Illuminate\Database\Seeder;
 
