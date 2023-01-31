@@ -45,6 +45,8 @@ if (eleOverlay) {
                 baseUrl += 'posts/';
             } else if (eleOverlay.querySelector('form').classList.contains('category')) {
                 baseUrl += 'categories/';
+            } else if (eleOverlay.querySelector('form').classList.contains('tag')) {
+                baseUrl += 'tags/';
             }
             eleOverlay.querySelector('form').setAttribute('action', baseUrl + this.dataset.id);
         })

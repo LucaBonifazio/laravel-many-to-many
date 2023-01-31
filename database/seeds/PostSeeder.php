@@ -29,8 +29,9 @@ class PostSeeder extends Seeder
                 'content'  => $faker->paragraph(rand(1, 10), true),
                 'excerpt'  => $faker->paragraph(),
             ]);
+
+            $post->tags()->attach($faker->randomElements($tags, rand(0, ($tagCount > 10) ? 10 : $tagCount )));
         }
 
-        $post->tags()->attach($faker->randomElements($tags, rand(0, ($tagCount > 10) ? 10 : $tagCount )));
     }
 }
