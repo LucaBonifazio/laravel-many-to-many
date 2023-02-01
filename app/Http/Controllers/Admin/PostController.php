@@ -13,9 +13,11 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 class PostController extends Controller
 {
     private $validation = [
-        'category_id'  => 'required|integer|exists:categories,id',
+        'category_id'  => 'integer|exists:categories,id',
         'slug'         => 'string|required|max:100',
         'title'        => 'string|required|max:100',
+        'tags'         => 'array',
+        'tags.*'       => 'integer|exists:tags,id',
         'image'        => 'url|max:100',
         'upload_image' => 'image|max:1024',
         'content'      => 'string',
@@ -58,7 +60,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validation['slug'][] = 'unique:posts';
+        $this->validation['slug'] = 'unique:posts';
         $request->validate($this->validation);
 
         $data = $request->all();
@@ -67,13 +69,16 @@ class PostController extends Controller
         $img_path = Storage::put('uploads', $data['uploaded_img']);
 
         $post = new Post;
-        $post->slug        = $data['slug'];
-        $post->title       = $data['title'];
-        $post->image       = $data['image'];
+        $post->slug          = $data['slug'];
+        $post->title         = $data['title'];
+        $post->category->id  = $data['category_id'];
+        $post->image         = $data['image'];
         $post->uploaded_img  = $img_path;
-        $post->content     = $data['content'];
-        $post->excerpt     = $data['excerpt'];
+        $post->content       = $data['content'];
+        $post->excerpt       = $data['excerpt'];
         $post->save();
+
+        $post->tags()->attach($data['tags']);
 
         return redirect()->route('admin.posts.show', ['post' => $post]);
     }
@@ -118,13 +123,16 @@ class PostController extends Controller
         Storage::delete($post->uploaded_img);
 
 
-        $post->slug        = $data['slug'];
-        $post->title       = $data['title'];
-        $post->image       = $data['image'];
+        $post->slug          = $data['slug'];
+        $post->title         = $data['title'];
+        $post->category->id  = $data['category_id'];
+        $post->image         = $data['image'];
         $post->uploaded_img  = $img_path;
-        $post->content     = $data['content'];
-        $post->excerpt     = $data['excerpt'];
+        $post->content       = $data['content'];
+        $post->excerpt       = $data['excerpt'];
         $post->update();
+
+        $post->tags()->sync($data['tags']);
 
         return redirect()->route('admin.posts.show', ['post' => $post]);
     }
@@ -137,6 +145,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        //$post->tags()->sync([]);
+        $post->tags()->detach();
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('success_delete', $post);

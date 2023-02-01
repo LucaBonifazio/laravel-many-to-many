@@ -42,6 +42,20 @@
         </div>
 
         <div class="mb-3">
+            <label for="category_id" class="form-label">Category</label>
+            <input type="url" class="form-control @error('category_id') is-invalid @enderror" id="category_id" name="category_id" value="{{ old('category_id') }}">
+            @error('category_id')
+                <div class="invalid-feedback">
+                    <ul>
+                        @foreach ($errors->get('category_id') as $message)
+                            <li>{{ $message }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
             <label for="image" class="form-label">URL Image</label>
             <input type="url" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image') }}">
             @error('image')
