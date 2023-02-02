@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Tag;
 use App\Post;
 use App\Category;
 use Illuminate\Http\Request;
@@ -46,9 +47,11 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all('id', 'name');
+        $tags       = Tag::all();
 
         return view('admin.posts.create', [
             'categories'    => $categories,
+            'tags'          => $tags,
         ]);
     }
 
@@ -71,7 +74,7 @@ class PostController extends Controller
         $post = new Post;
         $post->slug          = $data['slug'];
         $post->title         = $data['title'];
-        $post->category->id  = $data['category_id'];
+        $post->category_id  = $data['category_id'];
         $post->image         = $data['image'];
         $post->uploaded_img  = $img_path;
         $post->content       = $data['content'];
@@ -102,7 +105,14 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $categories = Category::all('id', 'name');
+        $tags       = Tag::all();
+
+        return view('admin.posts.edit', [
+            'post'          => $post,
+            'categories'    => $categories,
+            'tags'          => $tags,
+        ]);
     }
 
     /**

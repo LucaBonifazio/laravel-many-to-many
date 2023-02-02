@@ -17,7 +17,9 @@
         <div>
             <h2>Tags</h2>
             @foreach ($post->tags as $tag)
-                {{ $tag->name }}{{ $loop->last ? '' : ', ' }}
+                <a href="{{ route('admin.tags.show', ['tag' => $tag])}}">
+                    {{ $tag->name }}{{ $loop->last ? '' : ', '}}
+                </a>
             @endforeach
         </div>
         @endif
